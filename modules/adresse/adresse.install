@@ -1,0 +1,40 @@
+<?php
+/**
+* Implements hook_field_schema().
+* 
+*/
+function adresse_field_schema($field) {
+  if($field["field_type"]=="adresse") {
+      $schema["columns"]["nom"] = array(
+        "type" => "varchar",
+        "length" => 32,
+        "not null" => FALSE,
+      );
+      $schema["columns"]["nom_gestionnaire"] = array(
+        "type" => "varchar",
+        "length" => 32,
+        "not null" => FALSE,
+      );
+      $schema["columns"]["adresse_gestionnaire"] = array(
+        "type" => "varchar",
+        "length" => 32,
+        "not null" => FALSE,
+      );
+      $schema["columns"]["code_postal"] = array(
+        "type" => "varchar",
+        "length" => 32,
+        "not null" => FALSE,
+      );
+      $schema["columns"]["mail"] = array(
+        "type" => "varchar",
+        "length" => 32,
+        "not null" => FALSE,
+      );
+      $schema["columns"]["tel"] = array(
+        "type" => "varchar",
+        "length" => 32,
+        "not null" => FALSE,
+      );
+      return $schema; 
+  }                        
+}

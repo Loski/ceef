@@ -1,0 +1,6 @@
+name = adresse
+description = Gestion des adresses
+package = maxime
+core = 7.x
+files[] = adresse.install
+files[] = adresse.module

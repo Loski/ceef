@@ -1,0 +1,17 @@
+name = ceef
+description = Ceef theme
+core = 7.x
+
+stylesheets[all][] = css/style.css
+scripts[] = js/jquery-2.1.3.min.js
+scripts[] = js/script.js
+regions[sidebar_first] = Left sidebar
+regions[sidebar_second] = Right sidebar
+regions[content] = Content
+regions[header] = Header
+regions[footer] = Footer
+regions[highlighted] = Highlighted
+regions[help] = Help
+regions[footer_first] = Footer First
+regions[footer_second] = Footer second
+regions[footer_link] = Footer Link

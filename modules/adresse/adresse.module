@@ -1,0 +1,94 @@
+
+
+<?php
+    /**
+    * Implements hook_field_info().
+    * 
+    */
+    function module_field_info() {
+      return array("adr"=>array(      
+        "label" => t("Adresse gérant"),
+        "description" => t("Permet d'afficher une adresse."),
+        "default_widget" => "adresse_widget",
+        "default_formatter" => "adresse_formater",
+        ),
+      );
+  }
+
+  function adresse_field_widget_info() {
+      return array(
+    // Déclaration du widget text  
+        "adr_widget_text" => array(
+          "label" => t("Information au format texte"),
+          "field types" => array("adr"),
+          ),
+    // Déclaration du widget map
+        "map_widget_map" => array(
+         "label" => t("Coordonnées depuis la map"),
+         "field types" => array("map"),
+         )    
+        );
+  }
+
+    /**
+     * Implements hook_field_widget_form().
+     */
+    function adresse_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+
+      // Récupération des valeurs des champs dans le cas ou l'on édite.
+      $nom_orga_value = isset($items[$delta]["nom"]) ? $items[$delta]["nom"] : "";
+      $nom_value = isset($items[$delta]["nom_gestionnaire"]) ? $items[$delta]["nom_gestionnaire"] : "";
+      
+      $widget=array();
+
+      // Gestion des deux differents type de widgets
+      switch ($instance["widget"]["type"]) {
+        // Création du render array widget text
+        case "adr_widget_text":
+        $widget["nom"] = array(
+            "#type" => "textfield",
+            "#default_value" => $nom_value,
+            "#size" => 20,
+            "#maxlength" => 20
+            );
+        $widget["nom_gestionnaire"]= array(
+            "#type" => "textfield",
+            "#default_value" => $nom_gestionnaire,
+            "#size" => 15,
+            "#maxlength" => 15
+            );      
+        break;   
+    }
+
+    $element += $widget;
+    return $element;  
+}
+
+function adresse_field_is_empty($item, $field) {
+  if ($field["type"] == "map") {
+    if (empty($item["nom"]) && empty($item["nom_gestionnaire"])) {
+      return TRUE;
+  }
+}
+return FALSE; 
+}
+
+function adresse_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $settings = $display["settings"];
+  $element = array();
+  if ($display["type"] == "field_map_formater") {  
+      $element[]= array(
+        "#prefix"=> '<div class="col-lg-3 col-md-3 col-sm-3">
+        <a href="http://www.e-graine.org"><img src="img/e-graine.gif" width=80 height=52 alt="logo e-graine"></a>
+        <address>
+            <strong>e-graine</strong><br>
+            9 Rue Denis Papin 78190 Trappes<br/>
+            Sophie OLLIER <br>
+            <abbr title="Téléphone">Tel:</abbr> 01 30 50 91 48
+        </address>
+    </div>'
+        ),
+      );
+    }
+    return($element);
+  }
